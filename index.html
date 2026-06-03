@@ -1,26 +1,95 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello World with Typescript</title>
+    <title>Gestor de Asientos - Reserva Interactiva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="min-h-screen bg-slate-100 text-slate-900">
-    <main class="mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center gap-6 p-6">
-      <h1 class="text-4xl font-bold tracking-tight">Hello World with Typescript</h1>
+  <body class="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-slate-900">
+    <main class="mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center gap-8 p-6">
+      <!-- Encabezado -->
+      <header class="w-full text-center">
+        <h1 class="text-5xl font-bold tracking-tight text-white mb-2">
+          🎬 Gestor de Asientos
+        </h1>
+        <p class="text-lg text-slate-300">Selecciona tus asientos con un solo clic</p>
+      </header>
 
-      <section class="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <img
-          src="/rigo-baby.jpg"
-          alt="Hello Rigo"
-          class="h-64 w-full bg-slate-50 object-contain p-2"
-        />
-        <div class="p-5">
-          <h2 class="text-xl font-semibold text-slate-900">Hello Rigo</h2>
-          <p id="app" class="mt-2 text-sm text-slate-600"></p>
+      <!-- Contenedor principal -->
+      <section class="w-full bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <!-- Contenedor de asientos -->
+        <div class="p-8 bg-gradient-to-b from-slate-50 to-white">
+          <div class="mb-6">
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">Mapa de Asientos</h2>
+            <p class="text-sm text-slate-600">Verde: disponible | Rojo: ocupado</p>
+          </div>
+          
+          <div id="asientos-contenedor" class="flex flex-col gap-2 p-6 bg-slate-100 rounded-2xl border-2 border-slate-300"></div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-8 bg-slate-100 border-t border-slate-200">
+          <div class="bg-white rounded-xl p-4 text-center shadow-sm">
+            <p class="text-sm font-semibold text-slate-600">Total</p>
+            <p class="text-3xl font-bold text-slate-900 mt-2" id="total">0</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 text-center shadow-sm">
+            <p class="text-sm font-semibold text-slate-600">Ocupados</p>
+            <p class="text-3xl font-bold text-red-600 mt-2" id="ocupados">0</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 text-center shadow-sm">
+            <p class="text-sm font-semibold text-slate-600">Disponibles</p>
+            <p class="text-3xl font-bold text-green-600 mt-2" id="libres">0</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 text-center shadow-sm">
+            <p class="text-sm font-semibold text-slate-600">Ocupación</p>
+            <p class="text-3xl font-bold text-blue-600 mt-2" id="porcentaje">0%</p>
+          </div>
+        </div>
+
+        <!-- Acciones -->
+        <div class="p-8 bg-white border-t border-slate-200 flex flex-col gap-4">
+          <div id="mensaje-contiguos" class="hidden"></div>
+          
+          <div class="flex flex-col sm:flex-row gap-4">
+            <button 
+              id="btn-contiguos"
+              class="flex-1 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors active:scale-95"
+            >
+              🔍 Buscar Asientos Contiguos
+            </button>
+            <button 
+              id="btn-resetear"
+              class="flex-1 px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors active:scale-95"
+            >
+              🔄 Resetear Sala
+            </button>
+          </div>
+          
+          <p class="text-xs text-slate-500 text-center">
+            💡 Haz clic en un asiento verde para reservarlo
+          </p>
         </div>
       </section>
+
+      <!-- Pie de página -->
+      <footer class="text-center text-slate-400 text-sm">
+        <p>Sistema de Reserva de Asientos • TypeScript + Tailwind CSS</p>
+      </footer>
     </main>
-    <script type="module" src="/src/main.ts"></script>
+
+    <script type="module">
+      import { inicializarUI, buscarAsientosContiguos, resetearSala } from '/src/app.ts';
+
+      // Inicializar la interfaz
+      document.addEventListener('DOMContentLoaded', () => {
+        inicializarUI();
+
+        // Eventos de botones
+        document.getElementById('btn-contiguos').addEventListener('click', buscarAsientosContiguos);
+        document.getElementById('btn-resetear').addEventListener('click', resetearSala);
+      });
+    </script>
   </body>
 </html>
